@@ -1,6 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Vehicle } from '@/types';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { MapPin, Fuel, Gauge, Settings, ArrowRight, Star } from 'lucide-react';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -8,7 +12,7 @@ interface VehicleCardProps {
 
 export default function VehicleCard({ vehicle }: VehicleCardProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-xl overflow-hidden card-hover border border-neutral-200 group">
+    <Card className="overflow-hidden card-hover group border-brand-neutral-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="relative h-48 overflow-hidden">
         <Image
           src={vehicle.images[0]}
@@ -16,55 +20,57 @@ export default function VehicleCard({ vehicle }: VehicleCardProps) {
           fill
           className="object-cover group-hover:scale-110 transition-all duration-500"
         />
-        <div className="absolute top-4 right-4 bg-gradient-to-r from-primary-700 to-primary-teal text-white px-3 py-2 rounded-full text-sm font-bold shadow-lg">
+        <Badge variant="premium" className="absolute top-4 right-4 shadow-lg">
           {vehicle.year}
-        </div>
-        <div className="absolute top-4 left-4">
-          <span className="trust-badge text-xs">✨ Quality Assured</span>
-        </div>
+        </Badge>
+        <Badge variant="success" className="absolute top-4 left-4 gap-1">
+          <Star className="w-3 h-3" />
+          Quality Assured
+        </Badge>
       </div>
       
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-xl font-bold text-neutral-800 group-hover:text-primary-700 transition-colors">
+      <CardHeader className="pb-3">
+        <div className="flex justify-between items-start">
+          <h3 className="text-xl font-bold text-foreground group-hover:text-brand-primary-700 transition-colors">
             {vehicle.make} {vehicle.model}
           </h3>
-          <span className="text-2xl font-bold bg-gradient-to-r from-accent-400 to-accent-500 bg-clip-text text-transparent">
+          <span className="text-2xl font-bold bg-gradient-to-r from-brand-accent-400 to-brand-accent-500 bg-clip-text text-transparent">
             ${vehicle.price.toLocaleString()}
           </span>
         </div>
-        
-        <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-neutral-600">
-          <div className="flex items-center space-x-1">
-            <span>📍</span>
+      </CardHeader>
+      
+      <CardContent className="pt-0 pb-4">
+        <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-brand-primary-600" />
             <span>{vehicle.location}</span>
           </div>
-          <div className="flex items-center space-x-1">
-            <span>⛽</span>
+          <div className="flex items-center gap-2">
+            <Fuel className="w-4 h-4 text-brand-secondary-500" />
             <span>{vehicle.fuelType}</span>
           </div>
-          <div className="flex items-center space-x-1">
-            <span>🏃‍♂️</span>
+          <div className="flex items-center gap-2">
+            <Gauge className="w-4 h-4 text-brand-accent-500" />
             <span>{vehicle.mileage.toLocaleString()} km</span>
           </div>
-          <div className="flex items-center space-x-1">
-            <span>⚙️</span>
+          <div className="flex items-center gap-2">
+            <Settings className="w-4 h-4 text-muted-foreground" />
             <span>{vehicle.transmission}</span>
           </div>
         </div>
-        
-        <div className="flex items-center justify-between">
-          <span className="inline-block bg-gradient-to-r from-secondary-100 to-secondary-200 text-secondary-800 text-sm px-3 py-2 rounded-full font-semibold border border-secondary-300">
-            {vehicle.condition}
-          </span>
-          <Link 
-            href={`/vehicles/${vehicle.id}`}
-            className="bg-gradient-to-r from-highlight-skyBlue to-primary-600 text-white px-6 py-3 rounded-xl hover:from-highlight-skyBlue/90 hover:to-primary-700 transition-all duration-300 text-sm font-bold shadow-lg transform hover:scale-105"
-          >
-            View Details →
+      </CardContent>
+      
+      <CardFooter className="flex items-center justify-between pt-0">
+        <Badge variant="outline" className="bg-brand-secondary-50 text-brand-secondary-700 border-brand-secondary-200">
+          {vehicle.condition}
+        </Badge>
+        <Button variant="brand" size="sm" className="gap-2 shadow-md" asChild>
+          <Link href={`/vehicles/${vehicle.id}`}>
+            View Details <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
-      </div>
-    </div>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

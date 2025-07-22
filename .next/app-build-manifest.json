@@ -26,15 +26,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/vehicles/page.js"
     ],
-    "/import-flow/page": [
+    "/vehicles/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/import-flow/page.js"
-    ],
-    "/about/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/about/page.js"
+      "static/chunks/app/vehicles/[id]/page.js"
     ]
   }
 }
